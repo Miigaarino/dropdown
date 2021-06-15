@@ -2,68 +2,40 @@ import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import SelectSumDuureg from '../components/SelectSumDuureg'
 import SelectBagKhoroo from '../components/SelectBagKhoroo'
-
-export const options = {
-  1: 'Улаанбаатар',
-  2: 'Дорнод',
-  3: 'Сүхбаатар',
-  4: 'Хэнтий',
-  5: 'Төв',
-  6: 'Говьсүмбэр',
-  7: 'Сэлэнгэ',
-  8: 'Дорноговь',
-  9: 'Дархан-Уул',
-  10: 'Өмнөговь',
-  11: 'Дундговь',
-  12: 'Орхон',
-  13: 'Өвөрхангай',
-  14: 'Булган',
-  15: 'Баянхонгор',
-  16: 'Архангай',
-  17: 'Хөвсгөл',
-  18: 'Завхан',
-  19: 'Говь-Алтай',
-  20: 'Баян-Өлгий',
-  21: 'Ховд',
-  22: 'Увс',
-}
+import States from '../data/aimagKhot'
+import Districts from '../data/sumDuureg'
+import Khoroo from '../data/bagKhoroo'
 
 export default function Home() {
   const [aimagHot, setAimagHot] = useState('')
+  const [sumDuuregList, setSumDuuregList] = useState({})
+  const [bagKhorooList, setBagKhorooList] = useState({})
   const [sumDuureg, setSumDuureg] = useState('')
-  const [idk, setIdk] = useState('')
-  const [idk1, setIdk1] = useState('')
   const [bagKhoroo, setBagKhoroo] = useState('')
 
   useEffect(() => {
     aimagHot &&
-      fetch(`https://www.grapecity.mn/api/application/district/${aimagHot}`)
-        .then((res) => res.json())
-        .then((json) => setSumDuureg(json.payload))
-        .catch((error) => {
-          console.log(error.message)
-        })
+      Object.keys(Districts).map((key) => {
+        key === aimagHot ? setSumDuuregList(Districts[key]) : null
+      })
   }, [aimagHot])
 
   useEffect(() => {
     aimagHot &&
-      idk &&
-      fetch(`https://www.grapecity.mn/api/application/khoroo/${idk}`)
-        .then((res) => res.json())
-        .then((json) => setBagKhoroo(json.payload))
-        .catch((error) => {
-          console.log(error.message)
-        })
-  }, [aimagHot, idk])
+      sumDuureg &&
+      Object.keys(Khoroo).map((key) => {
+        key === sumDuureg ? setBagKhorooList(Khoroo[key]) : null
+      })
+  }, [aimagHot, sumDuureg])
 
   const handleAimagHotChange = (e) => {
     setAimagHot(e.target.value)
   }
   const handleDuuregSumChange = (e) => {
-    setIdk(e.target.value)
+    setSumDuureg(e.target.value)
   }
   const handleBagHorooChange = (e) => {
-    setIdk1(e.target.value)
+    setBagKhoroo(e.target.value)
   }
 
   return (
@@ -71,28 +43,40 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Хот/Аймаг сонгоно уу:</h1>
         <select value={aimagHot} onChange={handleAimagHotChange}>
-          {Object.keys(options).map((key, index) => (
-            <option key={index} value={key}>
-              {options[key]}
+          {Object.keys(States).map((key, index) => (
+            <option key={index} value={States[key]}>
+              {States[key]}
             </option>
           ))}
         </select>
 
-        <SelectSumDuureg
-          idk={idk}
-          handleDuuregSumChange={handleDuuregSumChange}
-          sumDuureg={sumDuureg}
-        />
+        <h1> Дүүрэг/Сум сонгоно уу:</h1>
 
-        <SelectBagKhoroo
-          idk1={idk1}
-          handleBagHorooChange={handleBagHorooChange}
-          bagKhoroo={bagKhoroo}
-        />
+        <select value={sumDuureg} onChange={handleDuuregSumChange}>
+          {sumDuuregList
+            ? Object.keys(sumDuuregList).map((key, index) => (
+                <option key={index} value={sumDuuregList[key]}>
+                  {sumDuuregList[key]}
+                </option>
+              ))
+            : null}
+        </select>
 
-        <h1>{aimagHot && options[aimagHot]}</h1>
-        <h1>{idk && idk}</h1>
-        <h1>{idk1 && idk1}</h1>
+        <h1> Хороо/Баг сонгоно уу:</h1>
+
+        <select value={bagKhoroo} onChange={handleBagHorooChange}>
+          {bagKhorooList
+            ? Object.keys(bagKhorooList).map((key, index) => (
+                <option key={index} value={bagKhorooList[key]}>
+                  {bagKhorooList[key]}
+                </option>
+              ))
+            : null}
+        </select>
+
+        <h1>{aimagHot && aimagHot}</h1>
+        <h1>{sumDuureg && sumDuureg}</h1>
+        <h1>{bagKhoroo && bagKhoroo}</h1>
       </main>
     </div>
   )

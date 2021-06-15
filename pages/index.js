@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
-import SelectSumDuureg from '../components/SelectSumDuureg'
-import SelectBagKhoroo from '../components/SelectBagKhoroo'
-import States from '../data/aimagKhot'
-import Districts from '../data/sumDuureg'
-import Khoroo from '../data/bagKhoroo'
+import { Districts, Khoroo } from '../data/sumDuureg'
 
 export default function Home() {
   const [aimagHot, setAimagHot] = useState('')
@@ -43,9 +39,9 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Хот/Аймаг сонгоно уу:</h1>
         <select value={aimagHot} onChange={handleAimagHotChange}>
-          {Object.keys(States).map((key, index) => (
-            <option key={index} value={States[key]}>
-              {States[key]}
+          {Object.keys(Districts).map((key, index) => (
+            <option key={index} value={key}>
+              {key}
             </option>
           ))}
         </select>

@@ -3,20 +3,33 @@ import styles from '../styles/Home.module.css'
 import info from '../data/sumDuureg'
 const db = require('../data/sumDuuregS.json')
 
-const data = (name) => {
-  return db[name]
-}
-
 export default function Home() {
   const [hotAimag, sethotAimag] = useState('')
+  const [duuregSum, setDuuregSum] = useState('')
+  const [bagKhoroo, setBagKhoroo] = useState('')
+  const [duuregSumList, setDuuregSumList] = useState('')
+  const [bagKhorooList, setBagKhorooList] = useState('')
+
+  const handleHotAimagChange = (e) => {
+    sethotAimag(e.target.value)
+  }
+  const handleDuuregSumChange = (e) => {
+    setDuuregSum(e.target.value)
+  }
+  const handleBagKhorooChange = (e) => {
+    setBagKhoroo(e.target.value)
+  }
 
   return (
-    <div className='main'>
-      <select>
-        {Object.keys(db).map((key) => (
-          <option>{key}</option>
-        ))}
-      </select>
+    <div className={styles.container}>
+      <div className={styles.main}>
+        <select value={hotAimag} onChange={handleHotAimagChange}>
+          <option value=''> </option>
+          {Object.keys(db).map((key, index) => (
+            <option key={index}>{key}</option>
+          ))}
+        </select>
+      </div>
     </div>
   )
 }

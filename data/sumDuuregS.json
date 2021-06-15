@@ -1,19 +1,29 @@
 {
-  "Ulaanbaatar": {
+  "Улаанбаатар": {
     "ner": "Улаанбаатар",
     "sumDuurguud": {
-      "Bayangol": [{ "name": "18 horoo" }, { "name": "17 horoo" }],
-      "Bayanzurh": [{ "name": "1" }, { "name": "2 horoo" }]
+      "Баянгол": [{ "name": "18 horoo" }, { "name": "17 horoo" }],
+      "Баянзүрх": [{ "name": "1" }, { "name": "2 horoo" }]
     }
   },
-  "Uvs": {
+  "Увс": {
     "ner": "Увс",
     "sumDuurguud": {
-      "BaruunTuruun": [
+      "Баруунтуруун": [
         { "name": "BaruunTuruun bag" },
         { "name": "BaruunTuruun2 Bag" }
       ],
-      "Ulaangom": [{ "name": "Ulaangom bag" }, { "name": "Ulaangom2 bag" }]
+      "Улаангом": [{ "name": "Ulaangom bag" }, { "name": "Ulaangom2 bag" }]
+    }
+  },
+  "Өнмөговь": {
+    "ner": "Өнмөговь",
+    "sumDuurguud": {
+      "Даланзадгад": [
+        { "name": "Даланзадгад баг" },
+        { "name": "Даланзадгад баг2" }
+      ],
+      "Замын-үүд": [{ "name": "1Замын-үүд" }, { "name": "2 Замын-үүд" }]
     }
   }
 }

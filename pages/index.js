@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
-import { info } from '../data/sumDuureg'
+import info from '../data/sumDuureg'
+const db = require('../data/sumDuuregS.json')
+
+const [hotAimag, sethotAimag] = useState('')
+
+const data = (name) => {
+  return db[name]
+}
 
 export default function Home() {
   return (
-    <>
-      {Object.keys(info).map((hot, index) => (
-        <h1 key={index}>{info(hot)}</h1>
-      ))}
-    </>
+    <div className='main'>
+      {console.log(db['Ulaanbaatar'].ner)}
+      <select name='' id=''></select>
+    </div>
   )
 }

@@ -1,0 +1,19 @@
+{
+  "Ulaanbaatar": {
+    "ner": "Улаанбаатар",
+    "sumDuurguud": {
+      "Bayangol": [{ "name": "18 horoo" }, { "name": "17 horoo" }],
+      "Bayanzurh": [{ "name": "1" }, { "name": "2 horoo" }]
+    }
+  },
+  "Uvs": {
+    "ner": "Увс",
+    "sumDuurguud": {
+      "BaruunTuruun": [
+        { "name": "BaruunTuruun bag" },
+        { "name": "BaruunTuruun2 Bag" }
+      ],
+      "Ulaangom": [{ "name": "Ulaangom bag" }, { "name": "Ulaangom2 bag" }]
+    }
+  }
+}

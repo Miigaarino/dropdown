@@ -38,6 +38,8 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
+        <h1>Better Local Version</h1>
+
         <select value={hotAimag} onChange={handleHotAimagChange}>
           <option value=''> </option>
           {Object.keys(db).map((key, index) => (

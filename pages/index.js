@@ -1,69 +1,73 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 import styles from '../styles/Home.module.css'
-const db = require('../data/sumDuuregS.json')
+import Select from 'react-select'
+import data from '../data/data'
+// const db = require('../data/sumDuuregS.json')
+
+const SET_SUM_DUUREG_LIST = 'setSumDuuregList'
+const SET_BAG_KHOROO_LIST = 'setBagKhorooList'
+
+const initialState = {
+  sumDuuregList: [],
+  bagKhorooList: [],
+  data: { aimagKhot: '', sumDuureg: '', bagKhoroo: '' },
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case SET_SUM_DUUREG_LIST:
+      return {
+        ...state,
+        sumDuuregList: data.aimagKhotuud.find(
+          (aimagKhot) => aimagKhot.value === action.aimagKhot
+        ).sumDuurguud,
+      }
+    case SET_BAG_KHOROO_LIST:
+      return {
+        ...state,
+        bagKhorooList: state.sumDuuregList.find(
+          (sumDuureg) => sumDuureg.value === action.sumDuureg
+        ).bagKhorood,
+      }
+    default:
+      return initialState
+  }
+}
 
 export default function Home() {
-  const [hotAimag, sethotAimag] = useState('')
-  const [duuregSum, setDuuregSum] = useState('')
-  const [bagKhoroo, setBagKhoroo] = useState('')
-  const [duuregSumList, setDuuregSumList] = useState('')
-  const [bagKhorooList, setBagKhorooList] = useState('')
-
-  useEffect(() => {
-    hotAimag &&
-      Object.keys(db).map((key) => {
-        key === hotAimag ? setDuuregSumList(db[key].sumDuurguud) : null
-      })
-  }, [hotAimag])
-
-  useEffect(() => {
-    hotAimag &&
-      duuregSum &&
-      Object.keys(duuregSumList).map((key) => {
-        key === duuregSum ? setBagKhorooList(duuregSumList[key]) : null
-      })
-    console.log(bagKhorooList)
-  }, [hotAimag, duuregSum])
-
-  const handleHotAimagChange = (e) => {
-    sethotAimag(e.target.value)
-  }
-  const handleDuuregSumChange = (e) => {
-    setDuuregSum(e.target.value)
-  }
-  const handleBagKhorooChange = (e) => {
-    setBagKhoroo(e.target.value)
-  }
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
     <div className={styles.container}>
-      <main className={styles.main}>
-        <h1>Better Local Version</h1>
+      <main>
+        <h1>Even better local version</h1>
 
-        <select value={hotAimag} onChange={handleHotAimagChange}>
-          <option value=''> </option>
-          {Object.keys(db).map((key, index) => (
-            <option key={index}>{key}</option>
-          ))}
-        </select>
-        <br></br>
-        <select value={duuregSum} onChange={handleDuuregSumChange}>
-          <option value=''> </option>
-          {Object.keys(duuregSumList).map((key, index) => (
-            <option key={index}>{key}</option>
-          ))}
-        </select>
-        <br></br>
-        <select value={bagKhoroo} onChange={handleBagKhorooChange}>
-          <option value=''> </option>
-          {Object.keys(bagKhorooList).map((key, index) => (
-            <option key={index}>{bagKhorooList[key].name}</option>
-          ))}
-        </select>
-
-        <h1>{hotAimag && hotAimag}</h1>
-        <h1>{duuregSum && duuregSum}</h1>
-        <h1>{bagKhoroo && bagKhoroo}</h1>
+        <Select
+          instanceId='1'
+          options={data}
+          isSearchable
+          placeholder='Аймаг/Хот сонгоно уу'
+          onChange={(e) => {
+            dispatch({ type: SET_SUM_DUUREG_LIST, aimagKhot: e.value })
+          }}
+        />
+        <br />
+        <Select
+          instanceId='2'
+          isSearchable
+          placeholder='Сум/Дүүрэг сонгоно уу'
+          options={state.sumDuuregList}
+          onChange={(e) => {
+            dispatch({ type: SET_BAG_KHOROO_LIST, sumDuureg: e.value })
+          }}
+        />
+        <br />
+        <Select
+          instanceId='3'
+          isSearchable
+          placeholder='Баг/Хороо сонгоно уу'
+          options={state.bagKhorooList}
+        />
       </main>
     </div>
   )

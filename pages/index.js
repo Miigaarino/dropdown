@@ -25,11 +25,11 @@ function reducer(state, action) {
     case SET_BAG_KHOROO_LIST:
       return {}
     case SET_AIMAG_KHOT:
-      return {}
+      return { aimagKhot: state.aimagKhot }
     case SET_SUM_DUUREG:
-      return {}
+      return { sumDuureg: state.sumDuureg }
     case SET_BAG_KHOROO:
-      return {}
+      return { bagKhoroo: state.bagKhoroo }
     default:
       return initialState
   }
@@ -46,28 +46,12 @@ export default function Home() {
         <Select
           instanceId='1'
           options={data}
+          value={state.aimagKhot}
           isSearchable
-          value={aimagKhot}
           placeholder='Аймаг/Хот сонгоно уу'
-          onChange={(e) => {
-            dispatch({ type: SET_SUM_DUUREG_LIST })
-          }}
-        />
-        {console.log(aimagKhot)}
-        <br />
-        <Select
-          instanceId='2'
-          isSearchable
-          placeholder='Сум/Дүүрэг сонгоно уу'
-          onChange={(e) => {
-            dispatch({ type: SET_BAG_KHOROO_LIST })
-          }}
-        />
-        <br />
-        <Select
-          instanceId='3'
-          isSearchable
-          placeholder='Баг/Хороо сонгоно уу'
+          // onChange={(e) => {
+          //   dispatch({ type: SET_SUM_DUUREG_LIST })
+          // }}
         />
       </main>
     </div>

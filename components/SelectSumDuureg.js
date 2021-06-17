@@ -7,8 +7,8 @@ const SelectSumDuureg = ({ idk, handleDuuregSumChange, sumDuureg }) => {
 
       <select value={idk} onChange={handleDuuregSumChange}>
         {sumDuureg
-          ? sumDuureg.map((duureg) => (
-              <option value={duureg.id} key={duureg.id}>
+          ? sumDuureg.map((duureg, index) => (
+              <option value={duureg[i]} key={index}>
                 {duureg.name}
               </option>
             ))

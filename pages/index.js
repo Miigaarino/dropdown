@@ -1,8 +1,7 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useReducer } from 'react'
 import styles from '../styles/Home.module.css'
 import Select from 'react-select'
 import data from '../data/data'
-// const db = require('../data/sumDuuregS.json')
 
 const SET_AIMAG_KHOT = 'setAimagKhot'
 const SET_SUM_DUUREG = 'setSumDuureg'
@@ -12,7 +11,6 @@ const reducer = (state, action) => {
   switch (action.type) {
     case SET_AIMAG_KHOT:
       return {
-        // ...state,
         aimagKhot: action.index,
         sumDuureg: null,
         bagKhoroo: null,
@@ -60,8 +58,6 @@ export default function Home() {
           isSearchable
           placeholder='Аймаг/Хот сонгоно уу'
           onChange={(e) => handleAimagKhotChange(e.index)}
-          // getOptionValue={(i) => i.index}
-          // getOptionLabel={(i) => i.label}
         />
         <h1>Сум дүүрэг</h1>
         <Select
@@ -85,7 +81,6 @@ export default function Home() {
           isSearchable
           placeholder='Сум/Дүүрэг сонгоно уу'
           onChange={(e) => handleSumDuuregChange(e.index)}
-          // getOptionValue={(i) => i.index}
         />
         <h1>Баг хороо</h1>
         <Select
@@ -111,7 +106,6 @@ export default function Home() {
           onChange={(e) => {
             handleBagKhorooChange(e.index)
           }}
-          // getOptionValue={(i) => i.index}
         />
       </main>
     </div>

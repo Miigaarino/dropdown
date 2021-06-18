@@ -7,44 +7,8 @@ import Button from '@material-ui/core/Button'
 import data from '../data/data'
 import { useForm, Controller } from 'react-hook-form'
 
-const SET_AIMAG_KHOT = 'setAimagKhot'
-const SET_SUM_DUUREG = 'setSumDuureg'
-const SET_BAG_KHOROO = 'setBagKhoroo'
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case SET_AIMAG_KHOT:
-      return {
-        ...state,
-        aimagKhot: action.index,
-        sumDuureg: null,
-        bagKhoroo: null,
-      }
-    case SET_SUM_DUUREG:
-      return { ...state, sumDuureg: action.index, bagKhoroo: null }
-    case SET_BAG_KHOROO:
-      return { ...state, bagKhoroo: action.index }
-    default:
-      return state
-  }
-}
-
 export default function Form() {
   const { register, handleSubmit, control } = useForm()
-  const [state, dispatch] = useReducer(reducer, {
-    aimagKhot: null,
-    sumDuureg: null,
-    bagKhoroo: null,
-  })
-  const handleAimagKhotChange = (index) => {
-    dispatch({ type: SET_AIMAG_KHOT, index })
-  }
-  const handleSumDuuregChange = (index) => {
-    dispatch({ type: SET_SUM_DUUREG, index })
-  }
-  const handleBagKhorooChange = (index) => {
-    dispatch({ type: SET_BAG_KHOROO, index })
-  }
 
   const idkThisShit = (data) => {
     console.log(data)
@@ -53,26 +17,26 @@ export default function Form() {
     () => data.map((i, index) => ({ ...i, index })),
     []
   )
-  const sumDuureg = React.useMemo(
-    () =>
-      state.aimagKhot != null
-        ? aimagKhot[state.aimagKhot].sumDuurguud.map((i, index) => ({
-            ...i,
-            index,
-          }))
-        : [],
-    [aimagKhot, state.aimagKhot]
-  )
-  const bagKhoroo = React.useMemo(
-    () =>
-      state.sumDuureg != null
-        ? sumDuureg[state.sumDuureg].bagKhorood.map((i, index) => ({
-            ...i,
-            index,
-          }))
-        : [],
-    [aimagKhot, state.aimagKhot, state.sumDuureg, sumDuureg]
-  )
+  // const sumDuureg = React.useMemo(
+  //   () =>
+  //     state.aimagKhot != null
+  //       ? aimagKhot[state.aimagKhot].sumDuurguud.map((i, index) => ({
+  //           ...i,
+  //           index,
+  //         }))
+  //       : [],
+  //   [aimagKhot, state.aimagKhot]
+  // )
+  // const bagKhoroo = React.useMemo(
+  //   () =>
+  //     state.sumDuureg != null
+  //       ? sumDuureg[state.sumDuureg].bagKhorood.map((i, index) => ({
+  //           ...i,
+  //           index,
+  //         }))
+  //       : [],
+  //   [aimagKhot, state.aimagKhot, state.sumDuureg, sumDuureg]
+  // )
 
   return (
     <React.Fragment>
@@ -110,7 +74,7 @@ export default function Form() {
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          {/* <Controller
+          <Controller
             name='aimagKhot'
             render={({ field }) => (
               <Select
@@ -118,25 +82,21 @@ export default function Form() {
                 instanceId='khotAimag'
                 options={aimagKhot}
                 placeholder='Аймаг/Хот сонгоно уу'
-                onChange={(e) => handleAimagKhotChange(e.index)}
-                value={
-                  state.aimagKhot != null ? aimagKhot[state.aimagKhot] : []
-                }
               />
             )}
             control={control}
-            defaultValue=''
-          /> */}
-          <Select
+            defaultValue={[]}
+          />
+          {/* <Select
             instanceId='khotAimag'
             options={aimagKhot}
             value={state.aimagKhot != null ? aimagKhot[state.aimagKhot] : []}
             isSearchable
             placeholder='Аймаг/Хот сонгоно уу'
             onChange={(e) => handleAimagKhotChange(e.index)}
-          />
+          /> */}
         </Grid>
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12} sm={6}>
           <Select
             instanceId='sumDuureg'
             options={sumDuureg}
@@ -158,7 +118,7 @@ export default function Form() {
               handleBagKhorooChange(e.index)
             }}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} sm={7}>
           <TextField
             label='Дэлгэрэнгүй хаяг'

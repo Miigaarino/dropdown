@@ -1,10 +1,9 @@
 import React from 'react'
+import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Paper from '@material-ui/core/Paper'
-import AddressForm from '../components/Form'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -40,35 +39,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Home() {
+const thanks = () => {
   const classes = useStyles()
 
   return (
-    <>
-      <React.Fragment>
-        <CssBaseline />
-        <AppBar
-          position='absolute'
-          color='default'
-          className={classes.appBar}
+    <React.Fragment>
+      <CssBaseline />
+      <AppBar
+        position='absolute'
+        color='default'
+        className={classes.appBar}
+        style={{
+          background: '#c3c3c3',
+        }}
+      >
+        <Toolbar
           style={{
-            background: '#c3c3c3',
+            justifyContent: 'center',
           }}
         >
-          <Toolbar
-            style={{
-              justifyContent: 'center',
-            }}
-          >
-            <img src='/logo.png' alt='logo' />
-          </Toolbar>
-        </AppBar>
-        <main className={classes.layout}>
-          <Paper className={classes.paper}>
-            <AddressForm />
-          </Paper>
-        </main>
-      </React.Fragment>
-    </>
+          <img src='/logo.png' alt='logo' />
+        </Toolbar>
+      </AppBar>
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>Анкет илгээсэнд баярлалаа</Paper>
+      </main>
+    </React.Fragment>
   )
 }
+
+export default thanks

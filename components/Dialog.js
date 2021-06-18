@@ -6,7 +6,6 @@ import MuiDialogActions from '@material-ui/core/DialogActions'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
 import data from '../data/data'
 import Typography from '@material-ui/core/Typography'
 
@@ -54,7 +53,7 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions)
 
-const DialogAfter = ({ state }) => {
+const DialogAfter = ({ state, handleSubmit }) => {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -67,16 +66,6 @@ const DialogAfter = ({ state }) => {
   console.log('1')
   return (
     <>
-      <Button
-        variant='contained'
-        styles={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}
-        onClick={handleClickOpen}
-      >
-        Илгээх
-      </Button>
       <Dialog
         onClose={handleClose}
         aria-labelledby='customized-dialog-title'
@@ -108,11 +97,11 @@ const DialogAfter = ({ state }) => {
           </p>
         </DialogContent>
         <DialogActions>
-          <form action='/thanks'>
+          <form>
             <Button
               autoFocus
               type='submit'
-              onClick={handleClose}
+              onClick={handleSubmit(idkThisShit)}
               color='primary'
             >
               Илгээх

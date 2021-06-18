@@ -1,20 +1,15 @@
-import React, { useReducer, useCallback } from 'react'
+import React, { useReducer } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Select from 'react-select'
+import Button from '@material-ui/core/Button'
 import data from '../data/data'
-import DialogAfter from './Dialog'
+import { useForm, Controller } from 'react-hook-form'
 
 const SET_AIMAG_KHOT = 'setAimagKhot'
 const SET_SUM_DUUREG = 'setSumDuureg'
 const SET_BAG_KHOROO = 'setBagKhoroo'
-const SET_FIRST_NAME = 'setFirstName'
-const SET_LAST_NAME = 'setLastName'
-const SET_ID_NUMBER = 'setIdNumber'
-const SET_BIRTHDAY = 'setBirthday'
-const SET_ADDRESS_DETAILS = 'setAddressDetails'
-const SET_EMAIL = 'setEmail'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -29,37 +24,18 @@ const reducer = (state, action) => {
       return { ...state, sumDuureg: action.index, bagKhoroo: null }
     case SET_BAG_KHOROO:
       return { ...state, bagKhoroo: action.index }
-    case SET_FIRST_NAME:
-      return { ...state, firstName: action.payload }
-    case SET_LAST_NAME:
-      return { ...state, lastName: action.payload }
-    case SET_ID_NUMBER:
-      return { ...state, idNumber: action.payload }
-    case SET_BIRTHDAY:
-      return { ...state, birthday: action.payload }
-    case SET_ADDRESS_DETAILS:
-      return { ...state, addressDetails: action.payload }
-    case SET_EMAIL:
-      return { ...state, email: action.payload }
-
     default:
       return state
   }
 }
 
 export default function Form() {
+  const { register, handleSubmit, control } = useForm()
   const [state, dispatch] = useReducer(reducer, {
     aimagKhot: null,
     sumDuureg: null,
     bagKhoroo: null,
-    firstName: null,
-    lastName: null,
-    idNumber: null,
-    birthday: null,
-    addressDetails: null,
-    email: null,
   })
-
   const handleAimagKhotChange = (index) => {
     dispatch({ type: SET_AIMAG_KHOT, index })
   }
@@ -69,28 +45,35 @@ export default function Form() {
   const handleBagKhorooChange = (index) => {
     dispatch({ type: SET_BAG_KHOROO, index })
   }
-  const handleFirstNameChange = useCallback(
-    (e) => {
-      dispatch({ type: SET_FIRST_NAME, payload: e.target.value })
-    },
-    [dispatch]
+
+  const idkThisShit = (data) => {
+    console.log(data)
+  }
+  const aimagKhot = React.useMemo(
+    () => data.map((i, index) => ({ ...i, index })),
+    []
   )
-  const handleLastNameChange = (e) => {
-    dispatch({ type: SET_LAST_NAME, payload: e.target.value })
-  }
-  const handleIdNumberChange = (e) => {
-    dispatch({ type: SET_ID_NUMBER, payload: e.target.value })
-  }
-  const handleBirthDayChange = (e) => {
-    dispatch({ type: SET_BIRTHDAY, payload: e.target.value })
-  }
-  const handleAddressDetailsChange = (e) => {
-    dispatch({ type: SET_ADDRESS_DETAILS, payload: e.target.value })
-  }
-  const handleEmailChange = (e) => {
-    dispatch({ type: SET_EMAIL, payload: e.target.value })
-  }
-  console.log('1')
+  const sumDuureg = React.useMemo(
+    () =>
+      state.aimagKhot != null
+        ? aimagKhot[state.aimagKhot].sumDuurguud.map((i, index) => ({
+            ...i,
+            index,
+          }))
+        : [],
+    [aimagKhot, state.aimagKhot]
+  )
+  const bagKhoroo = React.useMemo(
+    () =>
+      state.sumDuureg != null
+        ? sumDuureg[state.sumDuureg].bagKhorood.map((i, index) => ({
+            ...i,
+            index,
+          }))
+        : [],
+    [aimagKhot, state.aimagKhot, state.sumDuureg, sumDuureg]
+  )
+
   return (
     <React.Fragment>
       <Typography variant='h6' gutterBottom>
@@ -98,54 +81,56 @@ export default function Form() {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <TextField
-            id='firstName'
-            name='firstName'
-            label='Өөрийн нэр'
-            fullWidth
-            onChange={handleFirstNameChange}
-          />
+          <TextField label='Өөрийн нэр' fullWidth {...register('firstName')} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id='lastName'
-            name='lastName'
             label='Эцэг(эхийн) нэр'
             fullWidth
-            onChange={handleLastNameChange}
+            {...register('lastName')}
           />
         </Grid>
         <Grid item xs={12} sm={7}>
           <TextField
-            id='IDnumber'
-            name='IDnumber'
             label='Регистрийн дугаар'
             fullWidth
-            onChange={handleIdNumberChange}
+            {...register('idNumber')}
           />
         </Grid>
         <Grid item xs={12} sm={5}>
           <TextField
-            id='date'
             label='Төрсөн өдөр'
             type='date'
-            defaultValue='1970-01-01'
+            defaultValue='2000-01-01'
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={handleBirthDayChange}
+            {...register('birthday')}
           />
         </Grid>
 
         <Grid item xs={12} sm={6}>
+          {/* <Controller
+            name='aimagKhot'
+            render={({ field }) => (
+              <Select
+                {...field}
+                instanceId='khotAimag'
+                options={aimagKhot}
+                placeholder='Аймаг/Хот сонгоно уу'
+                onChange={(e) => handleAimagKhotChange(e.index)}
+                value={
+                  state.aimagKhot != null ? aimagKhot[state.aimagKhot] : []
+                }
+              />
+            )}
+            control={control}
+            defaultValue=''
+          /> */}
           <Select
             instanceId='khotAimag'
-            options={data.map((i, index) => ({ ...i, index }))}
-            value={
-              state.aimagKhot != null
-                ? data.map((i, index) => ({ ...i, index }))[state.aimagKhot]
-                : []
-            }
+            options={aimagKhot}
+            value={state.aimagKhot != null ? aimagKhot[state.aimagKhot] : []}
             isSearchable
             placeholder='Аймаг/Хот сонгоно уу'
             onChange={(e) => handleAimagKhotChange(e.index)}
@@ -153,23 +138,10 @@ export default function Form() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Select
-            instanceId='sum'
-            options={
-              state.aimagKhot != null
-                ? data[state.aimagKhot].sumDuurguud.map((i, index) => ({
-                    ...i,
-                    index,
-                  }))
-                : []
-            }
-            value={
-              state.sumDuureg != null
-                ? data[state.aimagKhot].sumDuurguud.map((i, index) => ({
-                    ...i,
-                    index,
-                  }))[state.sumDuureg]
-                : []
-            }
+            instanceId='sumDuureg'
+            options={sumDuureg}
+            defaultValue=''
+            value={state.sumDuureg != null ? sumDuureg[state.sumDuureg] : []}
             isSearchable
             placeholder='Сум/Дүүрэг сонгоно уу'
             onChange={(e) => handleSumDuuregChange(e.index)}
@@ -177,25 +149,11 @@ export default function Form() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Select
-            instanceId='3'
-            options={
-              state.sumDuureg != null
-                ? data[state.aimagKhot].sumDuurguud[
-                    state.sumDuureg
-                  ].bagKhorood.map((i, index) => ({ ...i, index }))
-                : []
-            }
-            value={
-              state.bagKhoroo != null
-                ? data[state.aimagKhot].sumDuurguud[
-                    state.sumDuureg
-                  ].bagKhorood.map((i, index) => ({ ...i, index }))[
-                    state.bagKhoroo
-                  ]
-                : []
-            }
+            instanceId='bagKhoroo'
+            options={bagKhoroo}
+            value={state.sumDuureg != null ? bagKhoroo[state.bagKhoroo] : []}
             isSearchable
-            placeholder='Сум/Дүүрэг сонгоно уу'
+            placeholder='Баг/Хороо сонгоно уу'
             onChange={(e) => {
               handleBagKhorooChange(e.index)
             }}
@@ -203,47 +161,27 @@ export default function Form() {
         </Grid>
         <Grid item xs={12} sm={7}>
           <TextField
-            id='addressDetails'
-            name='addressDetails'
             label='Дэлгэрэнгүй хаяг'
             fullWidth
-            onChange={handleAddressDetailsChange}
+            {...register('addressDetails')}
           />
         </Grid>
         <Grid item xs={12} sm={5}>
-          <TextField
-            id='email'
-            name='email'
-            label='И-мейл хаяг'
-            fullWidth
-            onChange={handleEmailChange}
-          />
+          <TextField label='И-мейл хаяг' fullWidth {...register('email')} />
         </Grid>
       </Grid>
       <br></br>
 
-      <DialogAfter state={state} />
-
-      <p>{state.firstName != null ? state.firstName : null}</p>
-      <p>{state.lastName != null ? state.lastName : null}</p>
-      <p>{state.idNumber != null ? state.idNumber : null}</p>
-      <p>{state.birthday != null ? state.birthday : null}</p>
-      <p>{state.addressDetails != null ? state.addressDetails : null}</p>
-      <p>{state.email != null ? state.email : null}</p>
-
-      <p>{state.aimagKhot != null ? data[state.aimagKhot].label : null}</p>
-      <p>
-        {state.sumDuureg != null
-          ? data[state.aimagKhot].sumDuurguud[state.sumDuureg].label
-          : null}
-      </p>
-      <p>
-        {state.bagKhoroo != null
-          ? data[state.aimagKhot].sumDuurguud[state.sumDuureg].bagKhorood[
-              state.bagKhoroo
-            ].label
-          : null}
-      </p>
+      <Button
+        variant='contained'
+        styles={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}
+        onClick={handleSubmit(idkThisShit)}
+      >
+        Илгээх
+      </Button>
     </React.Fragment>
   )
 }

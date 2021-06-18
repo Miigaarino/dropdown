@@ -63,6 +63,8 @@ const DialogAfter = ({ state }) => {
   const handleClose = (e) => {
     setOpen(false)
   }
+
+  console.log('1')
   return (
     <>
       <Button

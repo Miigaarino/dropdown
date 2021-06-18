@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Paper from '@material-ui/core/Paper'
-import AddressForm from '../components/Form'
+import Form from '../components/Form'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles()
-
+  console.log('1')
   return (
     <>
       <React.Fragment>
@@ -65,7 +65,7 @@ export default function Home() {
         </AppBar>
         <main className={classes.layout}>
           <Paper className={classes.paper}>
-            <AddressForm />
+            <Form />
           </Paper>
         </main>
       </React.Fragment>

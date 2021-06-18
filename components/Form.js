@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useCallback } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
@@ -47,7 +47,7 @@ const reducer = (state, action) => {
   }
 }
 
-export default function AddressForm() {
+export default function Form() {
   const [state, dispatch] = useReducer(reducer, {
     aimagKhot: null,
     sumDuureg: null,
@@ -69,9 +69,12 @@ export default function AddressForm() {
   const handleBagKhorooChange = (index) => {
     dispatch({ type: SET_BAG_KHOROO, index })
   }
-  const handleFirstNameChange = (e) => {
-    dispatch({ type: SET_FIRST_NAME, payload: e.target.value })
-  }
+  const handleFirstNameChange = useCallback(
+    (e) => {
+      dispatch({ type: SET_FIRST_NAME, payload: e.target.value })
+    },
+    [dispatch]
+  )
   const handleLastNameChange = (e) => {
     dispatch({ type: SET_LAST_NAME, payload: e.target.value })
   }
@@ -87,7 +90,7 @@ export default function AddressForm() {
   const handleEmailChange = (e) => {
     dispatch({ type: SET_EMAIL, payload: e.target.value })
   }
-
+  console.log('1')
   return (
     <React.Fragment>
       <Typography variant='h6' gutterBottom>
@@ -220,6 +223,27 @@ export default function AddressForm() {
       <br></br>
 
       <DialogAfter state={state} />
+
+      <p>{state.firstName != null ? state.firstName : null}</p>
+      <p>{state.lastName != null ? state.lastName : null}</p>
+      <p>{state.idNumber != null ? state.idNumber : null}</p>
+      <p>{state.birthday != null ? state.birthday : null}</p>
+      <p>{state.addressDetails != null ? state.addressDetails : null}</p>
+      <p>{state.email != null ? state.email : null}</p>
+
+      <p>{state.aimagKhot != null ? data[state.aimagKhot].label : null}</p>
+      <p>
+        {state.sumDuureg != null
+          ? data[state.aimagKhot].sumDuurguud[state.sumDuureg].label
+          : null}
+      </p>
+      <p>
+        {state.bagKhoroo != null
+          ? data[state.aimagKhot].sumDuurguud[state.sumDuureg].bagKhorood[
+              state.bagKhoroo
+            ].label
+          : null}
+      </p>
     </React.Fragment>
   )
 }
